@@ -1,7 +1,6 @@
 package com.gitrepo.gitrepo_spring.entities;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
