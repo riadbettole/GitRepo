@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>UserGit List</title>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" />
 </head>
 <body>
 <header>
@@ -31,11 +32,12 @@
                 <td>${userGit.userGitState}</td>
                 <td>
                     <a
+                            class="btn bg-danger"
                             onclick="return confirm('Are you sure you want to delete this UserGit?')"
                             href="deleteUserGit?id=${userGit.id}"
                     >Delete
                     </a>
-                    <a href="editUserGit?id=${userGit.id}">
+                    <a class="btn bg-success" href="editUserGit?id=${userGit.id}">
                     Edit
                     </a>
                 </td>

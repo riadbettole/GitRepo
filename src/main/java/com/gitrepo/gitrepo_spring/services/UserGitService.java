@@ -1,6 +1,7 @@
 package com.gitrepo.gitrepo_spring.services;
 
 import com.gitrepo.gitrepo_spring.entities.UserGit;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface UserGitService {
     void deleteAllUsersGit();
     UserGit getUserGitById(Long id);
     List<UserGit> getAllUsersGit();
+    Page<UserGit> getAllCustomersByPage(int page, int size);
 }

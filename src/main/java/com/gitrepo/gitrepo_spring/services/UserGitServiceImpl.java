@@ -3,6 +3,8 @@ package com.gitrepo.gitrepo_spring.services;
 import com.gitrepo.gitrepo_spring.entities.UserGit;
 import com.gitrepo.gitrepo_spring.repositories.UserGitRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,10 @@ public class UserGitServiceImpl implements UserGitService {
     @Override
     public List<UserGit> getAllUsersGit() {
         return userGitRepository.findAll();
+    }
+
+    @Override
+    public Page<UserGit> getAllCustomersByPage(int page, int size) {
+        return userGitRepository.findAll(PageRequest.of(page, size));
     }
 }

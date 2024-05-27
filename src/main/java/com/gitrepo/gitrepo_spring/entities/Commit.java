@@ -1,6 +1,7 @@
 package com.gitrepo.gitrepo_spring.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Commit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
+    @FutureOrPresent
     private Date createAt;
     @ManyToOne
     private Branch branch;
