@@ -22,5 +22,11 @@ public class Branch {
     @ManyToOne
     private Repository repository;
     @OneToMany(mappedBy = "branch")
-    private List<Commit> commits = new ArrayList<>();
+    private List<CommitFile> commitFiles = new ArrayList<>();
+
+    public Branch(String branchName, Repository repository) {
+        this.branchName = branchName;
+        this.repository = repository;
+    }
+//    private List<Commit> commits = new ArrayList<>();
 }

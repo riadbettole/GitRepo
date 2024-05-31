@@ -1,14 +1,19 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Template.html">>
+
 <head>
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
     <meta charset="utf-8">
     <base href="/">
-    <title>Products List</title>
+    <title>GIT REPO</title>
 </head>
 <body>
-
+<div layout:fragment="content">
 <main class="container mt-5">
     <div class="p-1 text-center bg-light">
         <h1 class="mb-3">Login</h1>
@@ -30,6 +35,6 @@
     </form>
 
 </main>
-
+</div>
 </body>
 </html>

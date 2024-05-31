@@ -1,5 +1,6 @@
 package com.gitrepo.gitrepo_spring.security.entities;
 
+import com.gitrepo.gitrepo_spring.entities.Repository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,6 @@ public class User {
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
+    @OneToMany (mappedBy = "user")
+    private List<Repository> repositories = new ArrayList<>();
 }

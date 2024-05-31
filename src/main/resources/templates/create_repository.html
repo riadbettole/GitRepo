@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="Template.html">
+<head>
+    <title>Create a New Repository</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-5">
+        <h1>Create a new repository</h1>
+        <form th:action="@{/p/saveRepository}" method="post">
+            <div class="form-group">
+                <label for="owner">Owner *</label>
+                <input type="text" class="form-control" id="owner" name="owner" th:value="${#authentication.name}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Repository name *</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                <small class="form-text text-muted">Great repository names are short and memorable. Need inspiration?</small>
+            </div>
+            <div class="form-group">
+                <label for="description">Description (optional)</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Visibility</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="public" name="priv" th:value="0" checked>
+                    <label class="form-check-label" for="public">
+                        Public
+                    </label>
+                    <small class="form-text text-muted">Anyone on the internet can see this repository. You choose who can commit.</small>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="private" name="priv" th:value="1" >
+                    <label class="form-check-label" for="private">
+                        Private
+                    </label>
+                    <small class="form-text text-muted">You choose who can see and commit to this repository.</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Create repository</button>
+        </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

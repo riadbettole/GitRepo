@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -22,12 +23,13 @@ public class SecurityConfig {
         return httpSecurity
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable) //remove csrf cause no time
                 .authorizeHttpRequests(
                          authCustomiser -> authCustomiser
                                  .requestMatchers("/editUserGit","/updateUserGit","/deleteUserGit").hasRole("ADMIN")
                                  .requestMatchers("/createUserGit","/saveUserGit").hasAnyRole("ADMIN","MANAGER")
                                  .requestMatchers("/usersGitList").hasAnyRole("ADMIN","MANAGER","USER")
-                                 .requestMatchers("/login","/webjars/**").permitAll()
+                                 .requestMatchers("/login","/webjars/**","/upload/**","/files/**","/images/**", "/p/**").permitAll()
                                  .anyRequest().authenticated()
                 ).formLogin(
                     formLogin -> formLogin

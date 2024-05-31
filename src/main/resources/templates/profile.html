@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="Template.html">
+<head>
+    <title>Profile</title>
+<!--    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .profile-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <img th:src="@{/images/profile.png}" alt="Profile Image" class="profile-img">
+            <h2 th:text="${ownerName}"></h2>
+            <button th:if="${ownerName.equals(#authentication.getName())}" class="btn btn-primary" onclick="alert('Edit Profile')">Edit Profile</button>
+        </div>
+        <div class="col-md-9">
+            <form th:action="@{${'/p/'+#authentication.getName()}}" method="get" class="form-inline">
+                <input type="text" name="search" class="form-control pr-xl-5 mb-2 mr-sm-3" placeholder="Find a repository..." th:value="${search}">
+                <select name="visibility" class="form-control mb-2 mr-sm-3">
+                    <option value="">All</option>
+                    <option value="public" th:selected="${visibility == 'public'}">Public</option>
+                    <option value="private" th:selected="${visibility == 'private'}">Private</option>
+                </select>
+                <select name="language" class="form-control mb-2 mr-sm-3">
+                    <option value="">All Languages</option>
+                    <option th:each="lang : ${languages}" th:value="${lang}" th:text="${lang}" th:selected="${language == lang}"></option>
+                </select>
+                <select name="sort" class="form-control mb-2 mr-sm-3">
+                    <option value="name" th:selected="${sort == 'name'}">Sort by Name</option>
+                    <option value="date" th:selected="${sort == 'date'}">Sort by Date</option>
+                </select>
+                <a th:if="${ownerName.equals(#authentication.getName())}" th:href="@{/p/create_repository}" class="btn btn-success mb-2 mr-sm-3">New</a>
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
+            <div th:if="${repositories.isEmpty()}" class="alert alert-info">
+                No repositories found.
+            </div>
+            <ul th:unless="${repositories.isEmpty()}" id="repositoryList" class="list-group mt-3">
+                <li class="list-group-item" th:each="repo : ${repositories}">
+                    <a th:href="@{${'/p/' + ownerName + '/' + repo.name}}" th:text="${repo.name}"></a>
+                    <span class="badge badge-primary" th:text="${repo.language}"></span>
+                    <span class="badge badge-secondary" th:text="${#temporals.format(repo.updated, 'MMM d, yyyy')}"></span>
+                    <span th:if="${repo.priv}" class="badge badge-warning">Private</span>
+                </li>
+            </ul>
+            <br/>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{${'/p/'+ownerName}(page=${currentPage - 1}, search=${search}, visibility=${visibility}, language=${language}, sort=${sort})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+                        <a class="page-link" th:href="@{${'/p/'+ownerName}(page=${i}, search=${search}, visibility=${visibility}, language=${language}, sort=${sort})}" th:text="${i}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{${'/p/'+ownerName}(page=${currentPage + 1}, search=${search}, visibility=${visibility}, language=${language}, sort=${sort})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
